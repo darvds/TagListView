@@ -217,7 +217,7 @@ public class TagListView: UIView {
         rearrangeViews()
     }
     
-    private func rearrangeViews() {
+    public func rearrangeViews() {
         let views = tagViews as [UIView] + tagBackgroundViews + rowViews
         for view in views {
             view.removeFromSuperview()
@@ -283,7 +283,7 @@ public class TagListView: UIView {
         return CGSizeMake(frame.width, height)
     }
     
-    public func addTag(title: String) -> TagView {
+    public func addTag(title: String, updateNow: Bool = true) -> TagView {
         let tagView = TagView(title: title)
         
         tagView.textColor = textColor
@@ -311,13 +311,15 @@ public class TagListView: UIView {
                 tag.selected = (tag == this)
             }
         }
-        return addTagView(tagView)
+        return addTagView(tagView, updateNow: updateNow)
     }
     
-    public func addTagView(tagView: TagView) -> TagView {
+    public func addTagView(tagView: TagView, updateNow: Bool) -> TagView {
         tagViews.append(tagView)
         tagBackgroundViews.append(UIView(frame: tagView.bounds))
-        rearrangeViews()
+        if updateNow {
+            rearrangeViews()
+        }
         
         return tagView
     }
